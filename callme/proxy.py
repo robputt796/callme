@@ -124,10 +124,10 @@ class Proxy(base.Base):
         return self
 
     def destroy(self):
-        '''
+        """
             Destroys the proxy object cleaning up the connection as 
             it goes.
-        '''
+        """
         self.__del__()
 
     def _on_response(self, response, message):
@@ -227,10 +227,10 @@ class Proxy(base.Base):
         return _Method(self.__request, name)
 
     def __del__(self):
-        '''
+        """
             Forcefully kills the kombu connection to avoid stale response
             queues once you are done with the proxy object.
-        '''
+        """
         self._conn.close()
 
 # ===========================================================================
