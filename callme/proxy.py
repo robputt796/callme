@@ -123,6 +123,13 @@ class Proxy(base.Base):
             self._timeout = timeout
         return self
 
+    def destroy(self):
+        '''
+            Destroys the proxy object cleaning up the connection as 
+            it goes.
+        '''
+        self.__del__()
+
     def _on_response(self, response, message):
         """This method is automatically called when a response is incoming and
         decides if it is the message we are waiting for - the message with the
@@ -218,6 +225,13 @@ class Proxy(base.Base):
         # magic method dispatcher
         LOG.debug("Recursion: {0}".format(name))
         return _Method(self.__request, name)
+
+    def __del__(self):
+        '''
+            Forcefully kills the kombu connection to avoid stale response
+            queues once you are done with the proxy object.
+        '''
+        self._conn.close()
 
 # ===========================================================================
 
